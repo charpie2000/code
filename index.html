@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Devinez le code">
+    <meta name="keywords" content="Code, mastermind">
+    <meta name="author" content="Jeu adapté de Dmitrii Pankov">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devinez le code</title>
+    <style>
+        body, input {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        a.button {
+            text-decoration: none;
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 0;
+        }
+        input {
+            display: inline-block;
+            text-align: center;
+            border: 0;
+            /* outline: 0; */
+            border-bottom: 1px solid;
+            padding: 0;
+            margin: 0;
+            font-size: inherit;
+        }
+        input:focus {
+            border: 0;
+            outline: 0;
+            border-bottom: 1px solid;
+            /* outline; */
+        }
+        table {
+            width: 100%;
+            margin: 1em auto;
+            font-size: 1.5em;
+        }
+        del {
+            opacity: 50%;
+        }
+        /* .cell { */
+            /* width: 5em; */
+        /* } */
+        .left {
+            text-align: left;
+            padding-left: 0.5em;
+        }
+        .right {
+            text-align: right;
+            padding-right: 0.5em;
+        }
+        .center {
+            text-align: center;
+        }
+        .placeholder td {
+            height: 0;
+            line-height: 0;
+        }
+        #history {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+        #history_result {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+        #number {
+            font-weight: bold;
+        }
+        #message {
+            font-size: small;
+            color: red;
+            padding: 1em;
+        }
+        #description {
+            max-width: 20em;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <h1>Devinez le code</h1>
+    </div>
+    <table>
+        <tr class="placeholder">
+            <td class="right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td class="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td width="50%" class="right cell"><a id="button_new" class="button" href="#new" onclick="return false;" title="guess a new number">nouveau</a></td>
+            <td width="0%" id="number" class="center"></td>
+            <td width="50%" class="left cell"><a id="button_show" class="button" href="#show" onclick="return false;" title="stop game and show the number">réponse</a></td>
+        </tr>
+        <tr>
+            <td class="right"></td>
+            <td id="history" class="center"></td>
+            <td id="history_result" class="left" title="b - bulls, c - cows"></td>
+        </tr>
+        <tr>
+            <td class="right"><a id="button_hint" class="button" href="#hint" onclick="return false;" title="suggest a suitable number">indice</a></td>
+            <td class="center">
+                <form id="form" autocomplete="off">
+                    <input id="text_number" type="tel" maxlength="4" size="4" autocomplete="false" />
+                </form>
+            </td>
+            <td class="left"><a id="button_check" class="button" href="#check" onclick="return false;" title="check your number">valider</a></td>
+        </tr>
+        <tr>
+            <td id="message" class="center" colspan="3"></td>
+        </tr>
+    </table>
+    <div id="description">
+        <h2 class="center">Instructions</h2>
+        <p>Entrer un code composé de 4 chiffres uniques de 1 à 9 et valider votre choix</p>
+        <p>chaque b = un chiffre bien placé</p>
+        <p>chaque c = un chiffre correct mal placé</p>
+        <p>Donc, si le code est <b>5432</b> et vous choissisez <b>1234</b>, la réponse sera <b>bcc</b>, parce que vous avez un chiffre de bien placé et deux chiffres corrects mal placés</p>
+        <p>nouveau = deviner un nouveau code</p>
+        <p>réponse = montrer moi le code</p>
+        <p>indice = donner moi un indice</p>
+        <p>valider = valider votre choix</p>
+        <p class="center"><a href="mailto:sunray9@icloud.com?subject=Commentaires" title="sunray9@icloud.com">contact</a></p>
+    </div>
+</body>
+
+<!-- Scripts -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-R5GY57D036"></script> -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag () { dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-R5GY57D036');
+</script>
+    
+<script>
+(function () {
+
+var Game = function () {
+    this.chars = '123456789';
+    this.length = 4;
+    this.number = null;
+    this.history = [];
+    this.valid_numbers = [];
+    this._generate('', this.valid_numbers);
+    this.init();
+};
+
+Game.prototype._generate = function (prefix, items) {
+    if (prefix.length === this.length) {
+        items.push(prefix);
+    } else {
+        for (var i = 0; i < this.chars.length; i++) {
+            var c = this.chars[i];
+            if (!prefix.includes(c)) {
+                this._generate(prefix + c, items);
+            }
+        }
+    }
+};
+
+Game.prototype.init = function () {
+    this.history = [];
+    this.number = this.valid_numbers[Math.floor(Math.random() * this.valid_numbers.length)];
+};
+
+Game.prototype.check = function (number) {
+    var result = this._check(number, this.number);
+    if (result.ok) {
+        this.history.push(number);
+    }
+    return result;
+};
+
+Game.prototype._check = function (number, origin) {
+    if (!this.valid_numbers.includes(number)) {
+        for (var i = 0; i < number.length; i++) {
+            if (!this.chars.includes(number[i])) {
+                return {
+                    'ok': false,
+                    'error': 'Choisir des chiffres différents de 1 à 9'
+                };
+            }
+        }
+        if (number.length !== this.length) {
+            return {
+                'ok': false,
+                'error': 'Choisir 4 chiffres'
+            };
+        }
+        return {
+            'ok': false,
+            'error': 'Le code doit être composé de 4 chiffres diférents'
+        };
+    }
+    var bulls = 0;
+    var cows = 0;
+    for (var i = 0; i < origin.length; i++) {
+        for (var j = 0; j < number.length; j++) {
+            var a = origin[i];
+            var b = number[j];
+            if (a === b) {
+                if (i === j) {
+                    bulls++;
+                } else {
+                    cows++;
+                }
+            }
+        }
+    }
+    return {
+        'ok': true,
+        'number': number,
+        'bulls': bulls,
+        'cows': cows,
+        'win': bulls === this.length
+    }
+};
+
+Game.prototype.hint = function () {
+    var x = null;
+    var valid = false;
+    for (var i = 0; i < this.valid_numbers.length; i++) {
+        x = this.valid_numbers[i];
+        valid = true;
+        for (var h = 0; h < this.history.length; h++) {
+            var origin_result = this._check(this.history[h], this.number);
+            var x_result = this._check(this.history[h], x);
+            if (JSON.stringify(origin_result) === JSON.stringify(x_result)) {
+                continue;
+            } else {
+                valid = false;
+                break;
+            }
+        }
+        if (valid) break;
+    }
+    return x;
+};
+
+function gid(id) { return document.getElementById(id); }
+
+var View = function () {
+    this.game = new Game();
+    this.history = [];
+    this.hints = 0;
+    this.in_game = false;
+    var self = this;
+    gid('button_show').onclick = function () { self.onShow(); return false; };
+    gid('button_hint').onclick = function () { self.onHint(); return false; };
+    gid('button_new').onclick = function () { self.onNew(); return false; }
+    gid('button_check').onclick = function () { self.onCheck(); return false; }
+    gid('form').onsubmit = function (e) {
+        e.preventDefault();
+        self.onCheck();
+        return false;
+    };
+    this.init();
+    this.update_view();
+};
+
+View.prototype.init = function () {
+    this.game.init();
+    this.history = [];
+    this.hints = 0;
+    this.in_game = true;
+    gid('text_number').value = this.game.hint();
+
+    gtag('event', 'game_started');
+};
+
+View.prototype.update_view = function () {
+    var self = this;
+    gid('number').innerHTML = this.in_game ? '*'.repeat(this.game.length) : this.game.number;
+    gid('button_show').style = this.in_game ? 'display: inline-block' : 'display: none';
+    gid('button_hint').style = this.in_game ? 'display: inline-block' : 'display: none';
+    gid('button_check').style = this.in_game ? 'display: inline-block' : 'display: none';
+    gid('text_number').style = this.in_game ? 'display: inline-block' : 'display: none';
+    gid('history').innerHTML = this.history.map(function (x) { return self.result2HTML(x, 'number'); }).join('');
+    gid('history_result').innerHTML = this.history.map(function (x) { return self.result2HTML(x, 'result'); }).join('');
+    gid('message').innerHTML = '';
+    if (this.in_game) {
+        gid('text_number').focus();
+    } else {
+        gid('button_new').focus();
+    }
+};
+
+View.prototype.result2HTML = function (result, side) {
+    var number = result.number;
+    var origin = this.game.number;
+    var formatted_number = number;
+    if (!this.in_game) {
+        formatted_number = '';
+        for (var i = 0; i < this.game.length; i++) {
+            if (number[i] === origin[i]) {
+                formatted_number += '<b>' + number[i] + '</b>';
+            } else if (origin.includes(number[i])) {
+                formatted_number += number[i];
+            } else {
+                formatted_number += '<del>' + number[i] + '</del>';
+            }
+        }
+    }
+    if (side === 'number') {
+        return '<div>' + formatted_number + '</div>';
+    } else {
+        if (result.bulls + result.cows > 0) {
+            if (this.in_game) {
+                return '<div>' + 'b'.repeat(result.bulls) + 'c'.repeat(result.cows) + '</div>';
+            } else {
+                return '<div>' + '<b>b</b>'.repeat(result.bulls) + 'c'.repeat(result.cows) + '</div>';
+            }
+        } else {
+            return '<div>&nbsp;</div>'
+        }
+    }
+};
+
+View.prototype.onNew = function () {
+    this.init();
+    this.update_view();
+
+    gtag('event', 'new_game');
+};
+
+View.prototype.onCheck = function () {
+    var number = gid('text_number').value;
+    var result = this.game.check(number);
+    if (result.ok) {
+        gid('text_number').value = '';
+        this.history.push(result);
+        gid('history').innerHTML += this.result2HTML(result, 'number');
+        gid('history_result').innerHTML += this.result2HTML(result, 'result');
+        if (result.win) {
+            this.in_game = false;
+            this.update_view();
+
+            gtag('event', 'win', { 'steps': this.history.length, 'hints': this.hints });
+            gtag('event', 'game_finished');
+        }
+        gid('message').innerHTML = '';
+    } else {
+        gid('message').innerHTML = result.error;
+    }
+    gid('text_number').focus();
+
+    gtag('event', 'check_number');
+};
+
+View.prototype.onHint = function () {
+    gid('text_number').value = this.game.hint();
+    gid('text_number').focus();
+    gid('message').innerHTML = '';
+    this.hints++;
+    
+    gtag('event', 'use_hint');
+};
+
+View.prototype.onShow = function () {
+    this.in_game = false;
+    this.update_view();
+    
+    gtag('event', 'show_number', { 'steps': this.history.length, 'hints': this.hints });
+    gtag('event', 'game_finished');
+};
+
+var view = new View();
+
+})();
+</script>
+
+</html>
