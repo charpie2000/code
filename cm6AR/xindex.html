@@ -1,0 +1,68 @@
+<!doctype html> 
+<html lang="en; fr"> 
+<head>
+    <meta charset="UTF-8">
+	<meta name = "viewport" content = "width=device-width, initial-scale=1">
+	<script src="setup.js"></script>
+	<script src="logic.js"></script>
+	<link rel = "stylesheet" type = "text/css" href = "codeStyle.css">
+    <title>Le Code Maître</title>
+	
+</head>
+<body> 
+        
+	<div style = "background-color: #ffffff; border-radius: 15px; width: 600px; max-width: 95%; margin: 4vw; margin-top: 10px; padding-top: 10px;">
+	  
+    <h1>Le Code Maître</h1>    
+        
+		<div id = "guessSpace"></div>
+		
+		<div class = "gameSpace" id = "space">
+			<div>
+				<div class = "symbols" id = "pl1" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols" id = "pl2" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols" id = "pl3" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols" id = "pl4" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
+				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
+				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
+				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
+				<br>
+				
+                <center>
+                <button id = "btn" onClick = "checkArrays();">
+					Valider
+				</button>
+                </center>
+                
+			</div>
+		</div>
+	</div>
+        
+	
+	<div id = "myModal" class = "modal">
+		<div class = "modal-content" id = "modal-content">
+		</div>
+	</div>
+		
+<div style = "margin: 4vw;">
+	<h1>Instructions</h1>
+	<p>Deviner le code maître : Il y 4 cases avec 4 couleurs différentes ou non, selon votre choix, parmi les 6 ou 8 couleurs possibles. Vous avez 8 tentatives pour trouver le bon code de couleurs. Pour chaque couleur bien placé, vous recevez 1 pion noir et pour chaque couleur mal placé, 1 pion jaune.</p>
+    
+    <p><b>Paramêtres du jeu</b>
+    <br>
+    
+    <label>    
+    <br><input type="checkbox" checked> <a href="../cm6AR/index.html">6/4 couleurs répétitives</a>
+    <br><input type="checkbox" > <a href="../cm6SR/index.html">6/4 couleurs différentes</a>
+    <br><input type="checkbox" > <a href="../cm8AR/index.html">8/4 couleurs répétitives</a>
+    <br><input type="checkbox" > <a href="../cm8SR/index.html">8/4 couleurs différentes</a>   
+    </label>       
+    </p>
+    
+    <p><a href="mailto:charpie2012@me.com"><i>charpie2012@me.com</i></a></p>
+    
+</div>	
+ 
+</body>
+</html>
