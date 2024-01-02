@@ -1,1 +1,2 @@
-This is CODDE
+# Le Code
+Un clone de Mastermind en français
