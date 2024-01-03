@@ -85,7 +85,7 @@ function checkWhite(plArr) {		//function checks how many circles are the correct
 };
 
 function printGuess(plArr, black, white) {
-	var newCircles = "<center><div>";						//initialize a string that will be used to print the new circles to the play area.
+	var newCircles = "<div>";						//initialize a string that will be used to print the new circles to the play area.
 	var gameSpace = document.getElementById('space');		//get the game space from the document. The submited answer will be printed above it.
 	for (i = 0; i < 4; i++) {							//for loop adds a new circle to the string for each element in the player's array.
 		switch (plArr[i]) {			//like above, 0 = green, 1 = blue, etc.
@@ -129,7 +129,7 @@ function printGuess(plArr, black, white) {
 		}																										//so everything lines up nice.
 	}
 	
-	newCircles += "</div></center>";								//add the end tags to the string.
+	newCircles += "</div>";								//add the end tags to the string.
 	document.getElementById("guessSpace").innerHTML += newCircles;	//print the string to the document, creating the circles.
 	//console.log(plArr);
 
