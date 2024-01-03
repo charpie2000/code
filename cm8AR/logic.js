@@ -250,7 +250,7 @@ function copyMessage() {
     
     let message = `🟢🔵🔴🟡⚫️🟣🟠🟤\n`;
     message += `J'ai trouvé le CODE en ${guesses} coups!\n`;
-    message += `\nJoué au CODE ici:\nhttps://charpie2000.github.io/cm`;
+    message += `\nJoué au CODE ici:\nhttps://charpie2000.github.io/code/`;
     message += `\n🟢🔵🔴🟡⚫️🟣🟠🟤\n`;
 
     
