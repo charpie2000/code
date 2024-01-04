@@ -1,20 +1,27 @@
 <!doctype html> 
-<html lang="en; fr"> 
+<html lang="en-fr"> 
 <head>
     <meta charset="UTF-8">
 	<meta name = "viewport" content = "width=device-width, initial-scale=1">
 	<script src="setup.js"></script>
 	<script src="logic.js"></script>
 	<link rel = "stylesheet" type = "text/css" href = "../codeStyle.css">
-    <title>Le CODE</title>
+    
+    <title>Le CODE</title>      
+    <meta name="description" content="Deviner le code.">
+    
+    <!-- FB Meta Tags -->
+    <meta property="og:url" content="https://charpie2000.github.io/code">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LE CODE">
+    <meta property="og:description" content="Deviner le code.">
 </head>
     
 <body> 
-        
-	<div style = "background-color: #ffffff; border-radius: 15px; width: 600px; max-width: 95%; margin: 4vw; margin-top: 10px; padding-top: 10px;">
-	  
-        
-     <h1>Le CODE</h1>
+  
+    <div style = "background-color: #ffffff; border-radius: 15px; width: 600px; max-width: 95%; margin: 4vw; margin-top: 10px; padding-top: 10px;">    
+    
+    <h1>Le CODE</h1>
     
     <div class="button-container">
         <!-- Replace the URLs with your actual URLs -->
@@ -25,29 +32,23 @@
     </div>
     <br>   
         
-		<div id = "guessSpace"></div>
+        <div class = "gameSpace" id = "guessSpace"></div>
 		
-		<div class = "gameSpace" id = "space">
+        <div class = "gameSpace" id = "space">
 			<div>
-				<div class = "symbols" id = "pl1" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
-				<div class = "symbols" id = "pl2" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
-				<div class = "symbols" id = "pl3" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
-				<div class = "symbols" id = "pl4" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
-				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
-				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
-				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
-				<div class = "clue" style = "background-color: #ffffff; border-color: #ffffff;"></div>
-				<br>
-				
-                <center>
+				<div class = "symbols2" id = "pl1" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols2" id = "pl2" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols2" id = "pl3" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+				<div class = "symbols2" id = "pl4" onClick="changeColor(this);" style = "cursor: pointer; text-align: center;">0</div>
+                
                 <button id = "btn" onClick = "checkArrays();">
 					Valider
 				</button>
-                </center>
-                
+                <br>     
 			</div>
 		</div>
-	</div>
+        
+	</div> 
         
 	<div id = "myModal" class = "modal">
 		<div class = "modal-content" id = "modal-content">
@@ -62,14 +63,12 @@
     
 </div>	
  
-    
-  <script>
+    <script>
         // JavaScript function to navigate to the specified URL
         function navigateTo(url) {
             window.location.href = url;
         }
     </script>  
-    
-    
+     
 </body>
 </html>
