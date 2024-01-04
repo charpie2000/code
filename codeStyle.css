@@ -7,34 +7,34 @@ body {
 
 h1 {
         margin: 0; /* Remove default margin for h1 */
-        }
+}
        
-       .dark-border-button {
-        border: 2px solid #000;
-       }
+.dark-border-button {
+    border: 2px solid #000;
+}
         
-        .button-container {
-            display: flex;
-            gap: 5px;
-            align-items: center; 
-        }
+.button-container {
+    display: flex;
+    gap: 5px;
+    align-items: center; 
+}
 
-         .round-button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            color: #fff;
-        }
+.round-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #fff;
+}
        
-       /* Define different background colors for each button */
-        .button-1 { background-color: #3498db; }
-        .button-2 { background-color: #e74c3c; }
-        .button-3 { background-color: #2ecc71; }
-        .button-4 { background-color: #f39c12; }
+/* Define different background colors for each button */
+.button-1 { background-color: #3498db; }
+.button-2 { background-color: #e74c3c; }
+.button-3 { background-color: #2ecc71; }
+.button-4 { background-color: #f39c12; }
 
 #btn {
 	font-family: Helvetica; 
@@ -75,6 +75,15 @@ h1 {
 	color: #67E06F;
 }
 
+.clue222 {
+	width: 7%;
+	padding-top: 7%;
+	display: inline-block;
+	border: thin solid grey;
+	border-radius: 100%;
+	margin: 0px;
+}
+
 .clue {
 	width: 7%;
 	padding-top: 7%;
@@ -106,8 +115,6 @@ h1 {
 	-ms-user-select: none;
 	user-select: none;
 }
-
-
 
 .blocker {
 	width: 100%;
