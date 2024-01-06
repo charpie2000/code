@@ -3,7 +3,7 @@ var guesses = 0;    // How many times the player has guessed. Global because it 
 
 // Function to generate a random color (0-7) for the CPU's code
 function getRandomColor() {
-    return Math.floor(Math.random() * 7);
+    return Math.floor(Math.random() * 8);
 }
 
 // Selects random numbers (0-7) for the computer's code. Ensures colors are not repeated.
